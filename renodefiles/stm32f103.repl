@@ -1,0 +1,21 @@
+cpu: CPU.CortexM @ sysbus
+    cpuType: "cortex-m3"
+    nvic: nvic
+
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    systickFrequency: 72000000
+    -> cpu@0
+
+flash: Memory.MappedMemory @ sysbus 0x08000000
+    size: 0x10000
+
+sram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x5000
+
+usart1: UART.STM32_UART @ sysbus <0x40013800, +0x400>
+    frequency: 72000000
+    -> nvic@37
+
+timer1: Timers.STM32_Timer @ sysbus <0x40012C00, +0x400>
+    frequency: 72000000
+    initialLimit: 1000
